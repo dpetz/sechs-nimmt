@@ -6,7 +6,7 @@
 (def spiel-beispiel
   { :hand {"Mensch" [45 70 66 61 48 85 80 54 10 30] "Maschine" [79 98 9 76 20 82 44 75 36 65] }
     :reihe [[52] [2 34 37 49 55] [11 25 81] [39]]
-    :punkte { "Peter" 0 "Maschine" 0 }} )
+    :punkte { "Mensch" 0 "Maschine" 0 }} )
 
 ;;stapel [74 68 4 62 94 56 53 38 89 103 26 29 1 95 42 8 96 15 86 27 58 5 91 90 17 67 40 87 19 6 23 102 24 78 13 32 43 92 100 69 28 84 31 77 14 12 63 97 22 101 93 41 99 60 88 46 3 21 73 64 83 51 35 72 7 47 50 57 16 71 33 59]
 
@@ -27,3 +27,10 @@
       :reihe (map #(list %) (take 4 stapel))
       :hand (zipmap  spieler (partition 10 (drop 4 stapel)))
       :punkte (zipmap spieler (repeat 0) ) )))
+
+(defn zufallskarte [spiel spieler]
+  (rand-nth ((spiel :hand) spieler ))
+
+
+(defn lege [spiel spieler karte]
+(update-in spiel [:hand spieler] #(remove #{karte} %)  )
